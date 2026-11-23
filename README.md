@@ -1,6 +1,8 @@
 # BookJD
 
-I wanted my own booking page on my own site, with my own data. So I built one. This is the code behind [book.jddavenport.com](https://book.jddavenport.com), cleaned up so you can run your own.
+A self-hosted booking app. Your own Calendly, minus the SaaS bill and the black box.
+
+Live at [book.jddavenport.com](https://book.jddavenport.com).
 
 Someone picks a session type, sees only the times you're actually free, books it, pays if it's a paid session, and both calendars update. You own every piece of it: the availability logic, the payment flow, the email, the data.
 
@@ -13,7 +15,7 @@ Built with Next.js, Supabase, Google Calendar, and Stripe.
 3. **Book it.** The guest picks a slot and enters their details. A booking row is written immediately.
 4. **Pay, if it's paid.** Free sessions confirm on the spot. Paid sessions hand off to Stripe Checkout and confirm nothing until the payment webhook comes back.
 5. **Everything fires on confirm.** A real event is created on your Google Calendar with the guest as an attendee, confirmation emails go to the guest and to you, and the booking is marked confirmed.
-6. **Reminders and self-service.** A daily cron job emails guests whose meeting is about 24 hours out. Guests get their own links to reschedule or cancel.
+6. **Reminders and self-service.** A cron job sends reminders before the meeting. Guests get their own links to reschedule or cancel, no back-and-forth.
 7. **Optional webhook.** Set `BOOKING_WEBHOOK_URL` and every confirm, cancel and reschedule POSTs a JSON event there, so another system (mine is my agent setup) can react to it.
 
 ## Stack
@@ -33,7 +35,7 @@ Built with Next.js, Supabase, Google Calendar, and Stripe.
 git clone https://github.com/jddavenportOpen/bookjd.git
 cd bookjd
 npm install
-cp .env.example .env.local   # every variable is listed and commented there
+cp .env.example .env.local   # fill in your keys
 npm run dev
 ```
 
@@ -54,11 +56,13 @@ Your hours, weekdays, buffers, minimum notice, and slot interval are in [`lib/av
 - `lib/availability-config.ts`: your hours and timezone
 - `lib/email.ts`: email copy (`EMAIL_FROM` and `HOST_EMAIL` come from env)
 - `app/globals.css`: theme colors
-- `app/layout.tsx`: header and branding
+- `app/layout.tsx`: header + branding
 
 ## Deploy
 
-Push to a Vercel project, set the same env vars in the dashboard, and point your Stripe webhook at `/api/stripe/webhook`. The reminder cron is configured in [`vercel.json`](vercel.json). Set `CRON_SECRET` in Vercel and the reminder route only answers Vercel Cron.
+Push to a Vercel project, set the same env vars in the dashboard, and point your Stripe webhook at `/api/stripe/webhook`. The reminder cron is configured in [`vercel.json`](vercel.json).
+
+Set `CRON_SECRET` in Vercel and the reminder route only answers Vercel Cron.
 
 ## License
 
@@ -66,4 +70,6 @@ MIT. See [LICENSE](LICENSE).
 
 ---
 
-Built by [JD Davenport](https://jddavenport.com). Most of this code was written by Claude Code agents I run. I pick what gets built and check it by using it. It has no automated tests yet.
+Built in public by [JD Davenport](https://jddavenport.com). This is the actual code behind my booking page, cleaned up so you can run your own.
+
+Most of this code was written by Claude Code agents I run. I pick what gets built and check it by using it. It has no automated tests yet. Every variable is listed and commented in [`.env.example`](.env.example).
