@@ -1,6 +1,6 @@
 import { Booking, BookingType } from './types';
 
-const webhookUrl = process.env.OPENCLAW_WEBHOOK_URL;
+const webhookUrl = process.env.BOOKING_WEBHOOK_URL;
 
 export async function fireWebhook(
   event: 'booking.confirmed' | 'booking.cancelled' | 'booking.rescheduled',
@@ -8,7 +8,7 @@ export async function fireWebhook(
   bookingType: BookingType
 ) {
   if (!webhookUrl) {
-    console.log(`[OpenClaw Webhook] ${event}:`, booking.id);
+    console.log(`[booking webhook] ${event}:`, booking.id);
     return;
   }
 
@@ -39,6 +39,6 @@ export async function fireWebhook(
       }),
     });
   } catch (error) {
-    console.error('[OpenClaw Webhook] Failed:', error);
+    console.error('[booking webhook] Failed:', error);
   }
 }

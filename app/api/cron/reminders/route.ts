@@ -4,7 +4,24 @@ import { sendGuestReminder } from '@/lib/email';
 import { Booking, BookingType } from '@/lib/types';
 import { addHours } from 'date-fns';
 
-export async function POST() {
+// Vercel Cron calls this path with GET and, when CRON_SECRET is set,
+// an "Authorization: Bearer <CRON_SECRET>" header.
+function authorized(req: Request): boolean {
+  const secret = process.env.CRON_SECRET;
+  if (!secret) return true;
+  return req.headers.get('authorization') === `Bearer ${secret}`;
+}
+
+export async function GET(req: Request) {
+  if (!authorized(req)) {
+    return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  }
+  return sendDueReminders();
+}
+
+export const POST = GET;
+
+async function sendDueReminders() {
   const now = new Date();
   const windowStart = addHours(now, 23);
   const windowEnd = addHours(now, 25);

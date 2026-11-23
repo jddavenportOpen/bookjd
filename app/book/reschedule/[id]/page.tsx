@@ -44,7 +44,7 @@ export default async function ReschedulePage({
       <div className="bg-secondary rounded-lg p-4 mb-8 border border-border">
         <p className="text-sm text-muted-foreground">Current time:</p>
         <p className="font-semibold text-foreground">
-          {bookingType.name} — {format(displayTime, 'EEEE, MMMM d')} at {format(displayTime, 'h:mm a')}
+          {bookingType.name} · {format(displayTime, 'EEEE, MMMM d')} at {format(displayTime, 'h:mm a')}
         </p>
       </div>
 

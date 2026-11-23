@@ -3,7 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { stripe, isStripeConfigured } from '@/lib/stripe';
 import { createCalendarEvent } from '@/lib/google-calendar';
 import { sendGuestConfirmation, sendHostConfirmation } from '@/lib/email';
-import { fireWebhook } from '@/lib/openclaw-webhook';
+import { fireWebhook } from '@/lib/booking-webhook';
 import { BookingType, Booking } from '@/lib/types';
 import { addMinutes } from 'date-fns';
 

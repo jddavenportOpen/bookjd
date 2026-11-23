@@ -3,7 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { stripe, isStripeConfigured } from '@/lib/stripe';
 import { deleteCalendarEvent, updateCalendarEvent } from '@/lib/google-calendar';
 import { sendCancellationEmail } from '@/lib/email';
-import { fireWebhook } from '@/lib/openclaw-webhook';
+import { fireWebhook } from '@/lib/booking-webhook';
 import { Booking, BookingType } from '@/lib/types';
 import { differenceInHours } from 'date-fns';
 

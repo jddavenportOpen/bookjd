@@ -50,7 +50,7 @@ export async function sendGuestConfirmation(booking: Booking, bookingType: Booki
     `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px;">
       <h2 style="color:#111827;">You're booked! ✓</h2>
       <div style="background:#f9fafb;border-radius:8px;padding:16px;margin:16px 0;">
-        <p><strong>${bookingType.name}</strong> (${bookingType.duration_minutes} min) — ${priceText}</p>
+        <p><strong>${bookingType.name}</strong> (${bookingType.duration_minutes} min) · ${priceText}</p>
         <p>${time} (${booking.timezone})</p>
       </div>
       <p>Need to make changes?</p>
@@ -70,7 +70,7 @@ export async function sendHostConfirmation(booking: Booking, bookingType: Bookin
     `New booking: ${booking.guest_name} - ${bookingType.name}`,
     `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px;">
       <h2>New Booking</h2>
-      <p><strong>${bookingType.name}</strong> — ${time}</p>
+      <p><strong>${bookingType.name}</strong> · ${time}</p>
       <p>Guest: ${booking.guest_name} (${booking.guest_email})</p>
       ${booking.guest_company ? `<p>Company: ${booking.guest_company}</p>` : ''}
       ${booking.guest_notes ? `<p>Notes: ${booking.guest_notes}</p>` : ''}
@@ -86,7 +86,7 @@ export async function sendGuestReminder(booking: Booking, bookingType: BookingTy
     `Reminder: Your call with JD is tomorrow`,
     `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px;">
       <h2>Reminder: Tomorrow's Call</h2>
-      <p><strong>${bookingType.name}</strong> — ${time}</p>
+      <p><strong>${bookingType.name}</strong> · ${time}</p>
       <p>
         <a href="${baseUrl}/book/reschedule/${booking.id}">Reschedule</a> · 
         <a href="${baseUrl}/book/cancel/${booking.id}">Cancel</a>
@@ -104,7 +104,7 @@ export async function sendCancellationEmail(booking: Booking, bookingType: Booki
     `Cancelled: ${bookingType.name} with JD`,
     `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:24px;">
       <h2>Booking Cancelled</h2>
-      <p><strong>${bookingType.name}</strong> — ${time}</p>
+      <p><strong>${bookingType.name}</strong> · ${time}</p>
       ${refundText ? `<p>${refundText}</p>` : ''}
       <p><a href="${baseUrl}/book">Book a new time</a></p>
     </div>`
